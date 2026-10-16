@@ -62,10 +62,10 @@ export function formFromExtraction(x: any): FormData {
     penyelenggara: v(x?.kegiatan?.penyelenggara),
     pegawai: Array.isArray(x?.pegawai_ditugaskan)
       ? x.pegawai_ditugaskan.map((p: Record<string, unknown>) => ({
-          nama: v(p.nama),
-          nip: v(p.nip),
-          jabatan: v(p.jabatan),
-          unit: v(p.unit),
+          nama: v(p["nama"]),
+          nip: v(p["nip"]),
+          jabatan: v(p["jabatan"]),
+          unit: v(p["unit"]),
         }))
       : [],
   };
