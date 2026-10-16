@@ -3,3 +3,4 @@
 - [x] Akun pertama tersedia dan sesi akun yang diminta berhasil membuka daftar surat sebagai Admin.
 - [x] Jalankan surat uji melalui akun pertama, unggah, proses, tinjau, unduh draf, periksa nomor dan tanggal: DOCX unduhan berisi Nomor: UJI-ST/001/TU/X/2026 dan Jakarta, 16 Oktober 2026; draf tetap tersedia setelah halaman dimuat ulang.
 - [x] Periksa pengisian nomor dan tanggal pada kedua template resmi melalui pengujian dokumen.
+- [ ] Bangun arsip internal dengan filter dan unduhan Excel/CSV dari surat yang tersedia, lalu verifikasi surat uji dan kedua unduhan.
