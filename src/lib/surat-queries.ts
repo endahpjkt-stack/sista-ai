@@ -10,7 +10,8 @@ export const archiveQuery = () => queryOptions({
     if (error) throw new Error("Arsip surat tidak dapat dimuat.");
     return data.map(l => {
       const draft = [...l.drafts].sort((a,b)=>b.disetujui_pada.localeCompare(a.disetujui_pada))[0];
-      const final = [...l.finals].filter(f=>f.dikonfirmasi).sort((a,b)=>b.dicatat_pada.localeCompare(a.dicatat_pada))[0];
+      const finals = Array.isArray(l.finals) ? l.finals : l.finals ? [l.finals] : [];
+      const final = finals.filter(f=>f.dikonfirmasi).sort((a,b)=>b.dicatat_pada.localeCompare(a.dicatat_pada))[0];
       const extraction = [...l.extractions].sort((a,b)=>b.dibuat_pada.localeCompare(a.dibuat_pada))[0];
       const form = draft ? draft.data_disetujui as unknown as FormData : formFromExtraction(extraction?.json_hasil);
       return { id:l.id, judul:l.judul, status:l.status, nomor:final ? final.nomor_surat || "" : form.nomor_surat || "", tanggal:final ? final.tanggal_surat || "" : form.tanggal_surat || "", sumber:final ? "Final terkonfirmasi" : draft ? "Draf disetujui" : "Belum ada draf", pengirim:form.pengirim || "", kegiatan:form.nama_kegiatan || "", tempat:form.tempat || "", pegawai:(form.pegawai || []).map(p=>p.nama).join("; "), jumlah:form.pegawai?.length || l.jumlah_pegawai || 0, template:draft?.template || l.template_dipilih || "", diunggah:l.dibuat_pada.slice(0,10) };
