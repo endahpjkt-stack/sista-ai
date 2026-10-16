@@ -14,16 +14,274 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          aksi: string
+          detail: Json
+          id: string
+          letter_id: string | null
+          pengguna: string
+          waktu: string
+        }
+        Insert: {
+          aksi: string
+          detail?: Json
+          id?: string
+          letter_id?: string | null
+          pengguna?: string
+          waktu?: string
+        }
+        Update: {
+          aksi?: string
+          detail?: Json
+          id?: string
+          letter_id?: string | null
+          pengguna?: string
+          waktu?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_letter_id_fkey"
+            columns: ["letter_id"]
+            isOneToOne: false
+            referencedRelation: "letters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drafts: {
+        Row: {
+          data_disetujui: Json
+          disetujui_oleh: string
+          disetujui_pada: string
+          file_draf: string | null
+          id: string
+          letter_id: string
+          template: string
+        }
+        Insert: {
+          data_disetujui: Json
+          disetujui_oleh?: string
+          disetujui_pada?: string
+          file_draf?: string | null
+          id?: string
+          letter_id: string
+          template: string
+        }
+        Update: {
+          data_disetujui?: Json
+          disetujui_oleh?: string
+          disetujui_pada?: string
+          file_draf?: string | null
+          id?: string
+          letter_id?: string
+          template?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drafts_letter_id_fkey"
+            columns: ["letter_id"]
+            isOneToOne: false
+            referencedRelation: "letters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      extractions: {
+        Row: {
+          dibuat_pada: string
+          id: string
+          json_hasil: Json
+          letter_id: string
+          model: string
+          versi_prompt: string
+        }
+        Insert: {
+          dibuat_pada?: string
+          id?: string
+          json_hasil: Json
+          letter_id: string
+          model: string
+          versi_prompt: string
+        }
+        Update: {
+          dibuat_pada?: string
+          id?: string
+          json_hasil?: Json
+          letter_id?: string
+          model?: string
+          versi_prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "extractions_letter_id_fkey"
+            columns: ["letter_id"]
+            isOneToOne: false
+            referencedRelation: "letters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      finals: {
+        Row: {
+          dicatat_oleh: string | null
+          dicatat_pada: string
+          dikonfirmasi: boolean
+          drive_url: string | null
+          file_pdf_final: string
+          id: string
+          letter_id: string
+          nomor_surat: string | null
+          sheet_row: number | null
+          tanggal_surat: string | null
+        }
+        Insert: {
+          dicatat_oleh?: string | null
+          dicatat_pada?: string
+          dikonfirmasi?: boolean
+          drive_url?: string | null
+          file_pdf_final: string
+          id?: string
+          letter_id: string
+          nomor_surat?: string | null
+          sheet_row?: number | null
+          tanggal_surat?: string | null
+        }
+        Update: {
+          dicatat_oleh?: string | null
+          dicatat_pada?: string
+          dikonfirmasi?: boolean
+          drive_url?: string | null
+          file_pdf_final?: string
+          id?: string
+          letter_id?: string
+          nomor_surat?: string | null
+          sheet_row?: number | null
+          tanggal_surat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "finals_letter_id_fkey"
+            columns: ["letter_id"]
+            isOneToOne: true
+            referencedRelation: "letters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      letters: {
+        Row: {
+          alasan_pengecualian: string | null
+          checklist_cocok: boolean
+          dibuat_oleh: string
+          dibuat_pada: string
+          diperbarui_pada: string
+          file_disposisi: string | null
+          file_surat: string
+          id: string
+          judul: string
+          jumlah_pegawai: number | null
+          pengecualian: boolean
+          status: Database["public"]["Enums"]["letter_status"]
+          template_dipilih: string | null
+          template_rekomendasi: string | null
+        }
+        Insert: {
+          alasan_pengecualian?: string | null
+          checklist_cocok?: boolean
+          dibuat_oleh?: string
+          dibuat_pada?: string
+          diperbarui_pada?: string
+          file_disposisi?: string | null
+          file_surat: string
+          id?: string
+          judul?: string
+          jumlah_pegawai?: number | null
+          pengecualian?: boolean
+          status?: Database["public"]["Enums"]["letter_status"]
+          template_dipilih?: string | null
+          template_rekomendasi?: string | null
+        }
+        Update: {
+          alasan_pengecualian?: string | null
+          checklist_cocok?: boolean
+          dibuat_oleh?: string
+          dibuat_pada?: string
+          diperbarui_pada?: string
+          file_disposisi?: string | null
+          file_surat?: string
+          id?: string
+          judul?: string
+          jumlah_pegawai?: number | null
+          pengecualian?: boolean
+          status?: Database["public"]["Enums"]["letter_status"]
+          template_dipilih?: string | null
+          template_rekomendasi?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          nama: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          nama?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          nama?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "pegawai"
+      letter_status:
+        | "diunggah"
+        | "diekstrak"
+        | "ditinjau"
+        | "draf_siap"
+        | "menunggu_tte"
+        | "selesai"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +408,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "pegawai"],
+      letter_status: [
+        "diunggah",
+        "diekstrak",
+        "ditinjau",
+        "draf_siap",
+        "menunggu_tte",
+        "selesai",
+      ],
+    },
   },
 } as const
