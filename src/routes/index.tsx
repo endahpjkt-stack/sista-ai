@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileText, ShieldCheck, Sparkles, Archive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
@@ -46,7 +46,7 @@ function Index() {
           <div className="mt-10">
             {!loading && (
               <Button asChild size="lg" variant="seal">
-                <a href={user ? "/dashboard" : "/auth"}>{user ? "Buka daftar surat" : "Masuk ke aplikasi"}</a>
+                <Link to={user ? "/surat" : "/auth"}>{user ? "Buka daftar surat" : "Masuk ke aplikasi"}</Link>
               </Button>
             )}
           </div>

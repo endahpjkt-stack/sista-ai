@@ -1,0 +1,4 @@
+- [x] Bangun halaman login dengan profil yang sudah ada.
+- [x] Bangun daftar surat dengan filter status dan alur unggah, proses, tinjau, buat draf.
+- [ ] Jalankan satu surat uji melalui akun nyata: terblokir karena belum ada pengguna terdaftar; pengguna perlu membuat akun pertama di Lovable Cloud dan masuk.
+- [x] Periksa pengisian nomor dan tanggal pada kedua template resmi melalui pengujian dokumen.

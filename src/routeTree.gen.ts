@@ -10,33 +10,93 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedSuratRouteImport } from './routes/_authenticated/surat'
+import { Route as AuthenticatedSuratIndexRouteImport } from './routes/_authenticated/surat.index'
+import { Route as AuthenticatedSuratIdRouteImport } from './routes/_authenticated/surat.$id'
+import { Route as AuthenticatedSuratBaruRouteImport } from './routes/_authenticated/surat.baru'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedSuratRoute = AuthenticatedSuratRouteImport.update({
+  id: '/surat',
+  path: '/surat',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSuratIndexRoute = AuthenticatedSuratIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedSuratRoute,
+} as any)
+const AuthenticatedSuratIdRoute = AuthenticatedSuratIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedSuratRoute,
+} as any)
+const AuthenticatedSuratBaruRoute = AuthenticatedSuratBaruRouteImport.update({
+  id: '/baru',
+  path: '/baru',
+  getParentRoute: () => AuthenticatedSuratRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/surat': typeof AuthenticatedSuratRouteWithChildren
+  '/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/surat/baru': typeof AuthenticatedSuratBaruRoute
+  '/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/surat/baru': typeof AuthenticatedSuratBaruRoute
+  '/surat': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/surat': typeof AuthenticatedSuratRouteWithChildren
+  '/_authenticated/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/_authenticated/surat/baru': typeof AuthenticatedSuratBaruRoute
+  '/_authenticated/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/auth' | '/surat' | '/surat/$id' | '/surat/baru' | '/surat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/surat/$id' | '/surat/baru' | '/surat'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/surat'
+    | '/_authenticated/surat/$id'
+    | '/_authenticated/surat/baru'
+    | '/_authenticated/surat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +108,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/surat': {
+      id: '/_authenticated/surat'
+      path: '/surat'
+      fullPath: '/surat'
+      preLoaderRoute: typeof AuthenticatedSuratRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/surat/': {
+      id: '/_authenticated/surat/'
+      path: '/'
+      fullPath: '/surat/'
+      preLoaderRoute: typeof AuthenticatedSuratIndexRouteImport
+      parentRoute: typeof AuthenticatedSuratRoute
+    }
+    '/_authenticated/surat/$id': {
+      id: '/_authenticated/surat/$id'
+      path: '/$id'
+      fullPath: '/surat/$id'
+      preLoaderRoute: typeof AuthenticatedSuratIdRouteImport
+      parentRoute: typeof AuthenticatedSuratRoute
+    }
+    '/_authenticated/surat/baru': {
+      id: '/_authenticated/surat/baru'
+      path: '/baru'
+      fullPath: '/surat/baru'
+      preLoaderRoute: typeof AuthenticatedSuratBaruRouteImport
+      parentRoute: typeof AuthenticatedSuratRoute
+    }
   }
 }
 
+interface AuthenticatedSuratRouteChildren {
+  AuthenticatedSuratIdRoute: typeof AuthenticatedSuratIdRoute
+  AuthenticatedSuratBaruRoute: typeof AuthenticatedSuratBaruRoute
+  AuthenticatedSuratIndexRoute: typeof AuthenticatedSuratIndexRoute
+}
+
+const AuthenticatedSuratRouteChildren: AuthenticatedSuratRouteChildren = {
+  AuthenticatedSuratIdRoute: AuthenticatedSuratIdRoute,
+  AuthenticatedSuratBaruRoute: AuthenticatedSuratBaruRoute,
+  AuthenticatedSuratIndexRoute: AuthenticatedSuratIndexRoute,
+}
+
+const AuthenticatedSuratRouteWithChildren =
+  AuthenticatedSuratRoute._addFileChildren(AuthenticatedSuratRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSuratRoute: typeof AuthenticatedSuratRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedSuratRoute: AuthenticatedSuratRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

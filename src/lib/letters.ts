@@ -27,8 +27,11 @@ export interface Pegawai {
   nip: string;
   jabatan: string;
   unit: string;
+  pangkat?: string;
 }
 export interface FormData {
+  nomor_surat?: string;
+  tanggal_surat?: string;
   nomor_surat_masuk: string;
   tanggal_surat_masuk: string;
   pengirim: string;
@@ -66,6 +69,7 @@ export function formFromExtraction(x: any): FormData {
           nip: v(p["nip"]),
           jabatan: v(p["jabatan"]),
           unit: v(p["unit"]),
+          pangkat: v(p["pangkat"]),
         }))
       : [],
   };

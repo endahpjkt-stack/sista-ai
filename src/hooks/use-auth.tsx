@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useRouter } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -12,18 +14,28 @@ interface AuthCtx {
 const Ctx = createContext<AuthCtx>({ session: null, user: null, roles: [], isAdmin: false, loading: true });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const [session, setSession] = useState<Session | null>(null);
   const [roles, setRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      setSession(s);
+      if (!["SIGNED_IN", "SIGNED_OUT", "USER_UPDATED"].includes(event)) return;
+      void router.invalidate();
+      if (event !== "SIGNED_OUT") void queryClient.invalidateQueries();
+    });
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (data.user) {
+        const result = await supabase.auth.getSession();
+        setSession(result.data.session);
+      }
       setLoading(false);
     });
     return () => sub.subscription.unsubscribe();
-  }, []);
+  }, [router, queryClient]);
 
   useEffect(() => {
     if (!session?.user) {
