@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-const MODEL = "google/gemini-3-flash-preview";
+const MODEL = "google/gemini-3.8-flash";
 export const PROMPT_VERSION = "ekstraksi-v0.1";
 
 const SYSTEM_EKSTRAKSI = `Anda adalah asisten administrasi persuratan di BLSDM Komdigi Jakarta.
