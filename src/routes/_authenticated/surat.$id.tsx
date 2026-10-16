@@ -16,7 +16,7 @@ import { formFromExtraction, logAudit, STATUS_LABEL, type FormData } from "@/lib
 import { buildDocx, loadTemplate } from "@/lib/docx";
 import { tentukanTemplate, formatDariAturan, TEMPLATE_LABEL, KATEGORI_PENGECUALIAN, type TemplateFormat } from "@/lib/template-rules";
 import { supabase } from "@/integrations/supabase/client";
-import type { Json } from "@/integrations/supabase/types";
+import type { Json, Database } from "@/integrations/supabase/types";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/surat/$id")({ head: () => pageHead("Tinjau surat", "Tinjau hasil ekstraksi dokumen dan buat draf Surat Tugas resmi."), loader: ({context,params})=>context.queryClient.ensureQueryData(letterQuery(params.id)), component: Letter });
@@ -25,7 +25,12 @@ function Letter() {
   const {data}=useSuspenseQuery(letterQuery(id));
   return <Review key={`${id}-${data.extraction?.id ?? 'baru'}`} data={data} />;
 }
-function Review({data}:{data:NonNullable<ReturnType<typeof letterQuery>["initialData"]> extends never ? never : { letter: import("@/integrations/supabase/types").Database["public"]["Tables"]["letters"]["Row"]; extraction: import("@/integrations/supabase/types").Database["public"]["Tables"]["extractions"]["Row"] | null; draft: import("@/integrations/supabase/types").Database["public"]["Tables"]["drafts"]["Row"] | null }}) {
+type LetterData = {
+  letter: Database["public"]["Tables"]["letters"]["Row"];
+  extraction: Database["public"]["Tables"]["extractions"]["Row"] | null;
+  draft: Database["public"]["Tables"]["drafts"]["Row"] | null;
+};
+function Review({data}:{data:LetterData}) {
   const { letter, extraction, draft }=data;
   const router=useRouter(); const client=useQueryClient(); const process=useServerFn(extractLetter);
   const [form,setForm]=useState<FormData>(()=> draft ? draft.data_disetujui as unknown as FormData : formFromExtraction(extraction?.json_hasil));

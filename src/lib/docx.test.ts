@@ -20,7 +20,8 @@ describe("Pengisian template resmi",()=>{
     expect(paragraphs(fillOfficialXml(tanpa,form))).toContain("Jakarta, 16 Oktober 2026");
   });
   it("does not assign an official number or date without input",()=>{
-    const result=paragraphs(fillOfficialXml(tanpa,{...form,nomor_surat:undefined,tanggal_surat:undefined}));
+    const {nomor_surat: _nomor, tanggal_surat: _tanggal, ...withoutIssueData} = form;
+    const result=paragraphs(fillOfficialXml(tanpa,withoutIssueData));
     expect(result).toContain("Nomor: …………………");
     expect(result).toContain("Jakarta, …………………");
   });
