@@ -13,3 +13,5 @@
 - Use one auth-state subscriber in AuthProvider for router and query invalidation; clear protected caches before signing out.
 - Fill the original official DOCX XML in the browser, preserving document structure and formatting; never replace official templates with generated samples.
 - Load letter lists and details through shared TanStack Query options so uploads and draft approvals invalidate the same records.
+- Build archive views from accessible existing letters and related approved drafts/confirmed finals under the letters query-key prefix, avoiding duplicate archive records and preserving shared invalidation.
+- Generate archive exports in the browser; prepare Excel before the download click and encode CSV cells safely to prevent spreadsheet formula injection.
