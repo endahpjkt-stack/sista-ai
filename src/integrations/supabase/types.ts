@@ -169,6 +169,38 @@ export type Database = {
           },
         ]
       }
+      letter_access: {
+        Row: {
+          diberikan_oleh: string
+          diberikan_pada: string
+          id: string
+          letter_id: string
+          user_id: string
+        }
+        Insert: {
+          diberikan_oleh?: string
+          diberikan_pada?: string
+          id?: string
+          letter_id: string
+          user_id: string
+        }
+        Update: {
+          diberikan_oleh?: string
+          diberikan_pada?: string
+          id?: string
+          letter_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "letter_access_letter_id_fkey"
+            columns: ["letter_id"]
+            isOneToOne: false
+            referencedRelation: "letters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       letters: {
         Row: {
           alasan_pengecualian: string | null
@@ -181,6 +213,7 @@ export type Database = {
           id: string
           judul: string
           jumlah_pegawai: number | null
+          kategori_pengecualian: string | null
           pengecualian: boolean
           status: Database["public"]["Enums"]["letter_status"]
           template_dipilih: string | null
@@ -197,6 +230,7 @@ export type Database = {
           id?: string
           judul?: string
           jumlah_pegawai?: number | null
+          kategori_pengecualian?: string | null
           pengecualian?: boolean
           status?: Database["public"]["Enums"]["letter_status"]
           template_dipilih?: string | null
@@ -213,6 +247,7 @@ export type Database = {
           id?: string
           judul?: string
           jumlah_pegawai?: number | null
+          kategori_pengecualian?: string | null
           pengecualian?: boolean
           status?: Database["public"]["Enums"]["letter_status"]
           template_dipilih?: string | null
@@ -264,6 +299,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_letter: { Args: { _letter_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -271,6 +307,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_letter_owner: { Args: { _letter_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
