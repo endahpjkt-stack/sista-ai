@@ -1,5 +1,5 @@
 - [x] Bangun halaman login dengan profil yang sudah ada.
 - [x] Bangun daftar surat dengan filter status dan alur unggah, proses, tinjau, buat draf.
-- [ ] Buat akun pertama untuk alamat email yang telah diberikan: pengguna perlu membuka More → Users → Add user → Create new user dan menentukan kata sandi secara privat; akun otomatis menjadi Admin.
-- [ ] Jalankan surat uji melalui akun pertama, unggah, proses, tinjau, unduh draf, periksa nomor dan tanggal: menunggu akun pertama tersedia.
+- [x] Akun pertama tersedia dan sesi akun yang diminta berhasil membuka daftar surat sebagai Admin.
+- [x] Jalankan surat uji melalui akun pertama, unggah, proses, tinjau, unduh draf, periksa nomor dan tanggal: DOCX unduhan berisi Nomor: UJI-ST/001/TU/X/2026 dan Jakarta, 16 Oktober 2026; draf tetap tersedia setelah halaman dimuat ulang.
 - [x] Periksa pengisian nomor dan tanggal pada kedua template resmi melalui pengujian dokumen.
