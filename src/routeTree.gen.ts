@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedSuratRouteImport } from './routes/_authenticated/surat'
 import { Route as AuthenticatedSuratIndexRouteImport } from './routes/_authenticated/surat.index'
+import { Route as AuthenticatedSuratIdRouteImport } from './routes/_authenticated/surat.$id'
+import { Route as AuthenticatedSuratBaruRouteImport } from './routes/_authenticated/surat.baru'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,16 +41,30 @@ const AuthenticatedSuratIndexRoute = AuthenticatedSuratIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedSuratRoute,
 } as any)
+const AuthenticatedSuratIdRoute = AuthenticatedSuratIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedSuratRoute,
+} as any)
+const AuthenticatedSuratBaruRoute = AuthenticatedSuratBaruRouteImport.update({
+  id: '/baru',
+  path: '/baru',
+  getParentRoute: () => AuthenticatedSuratRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/surat': typeof AuthenticatedSuratRouteWithChildren
+  '/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/surat/baru': typeof AuthenticatedSuratBaruRoute
   '/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/surat/baru': typeof AuthenticatedSuratBaruRoute
   '/surat': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesById {
@@ -57,19 +73,23 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/surat': typeof AuthenticatedSuratRouteWithChildren
+  '/_authenticated/surat/$id': typeof AuthenticatedSuratIdRoute
+  '/_authenticated/surat/baru': typeof AuthenticatedSuratBaruRoute
   '/_authenticated/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/surat' | '/surat/'
+  fullPaths: '/' | '/auth' | '/surat' | '/surat/$id' | '/surat/baru' | '/surat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/surat'
+  to: '/' | '/auth' | '/surat/$id' | '/surat/baru' | '/surat'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/surat'
+    | '/_authenticated/surat/$id'
+    | '/_authenticated/surat/baru'
     | '/_authenticated/surat/'
   fileRoutesById: FileRoutesById
 }
@@ -116,14 +136,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSuratIndexRouteImport
       parentRoute: typeof AuthenticatedSuratRoute
     }
+    '/_authenticated/surat/$id': {
+      id: '/_authenticated/surat/$id'
+      path: '/$id'
+      fullPath: '/surat/$id'
+      preLoaderRoute: typeof AuthenticatedSuratIdRouteImport
+      parentRoute: typeof AuthenticatedSuratRoute
+    }
+    '/_authenticated/surat/baru': {
+      id: '/_authenticated/surat/baru'
+      path: '/baru'
+      fullPath: '/surat/baru'
+      preLoaderRoute: typeof AuthenticatedSuratBaruRouteImport
+      parentRoute: typeof AuthenticatedSuratRoute
+    }
   }
 }
 
 interface AuthenticatedSuratRouteChildren {
+  AuthenticatedSuratIdRoute: typeof AuthenticatedSuratIdRoute
+  AuthenticatedSuratBaruRoute: typeof AuthenticatedSuratBaruRoute
   AuthenticatedSuratIndexRoute: typeof AuthenticatedSuratIndexRoute
 }
 
 const AuthenticatedSuratRouteChildren: AuthenticatedSuratRouteChildren = {
+  AuthenticatedSuratIdRoute: AuthenticatedSuratIdRoute,
+  AuthenticatedSuratBaruRoute: AuthenticatedSuratBaruRoute,
   AuthenticatedSuratIndexRoute: AuthenticatedSuratIndexRoute,
 }
 
