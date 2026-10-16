@@ -12,12 +12,12 @@ export const DEFAULT_TEMPLATE_URL: Record<TemplateFormat, string> = {
 };
 export const templatePath = (t: TemplateFormat) => `templates/${t}.docx`;
 
-/** Prefer the admin-uploaded official template; fall back to the bundled sample. */
+/** Prefer the admin-uploaded template; fall back to the official TU document. */
 export async function loadTemplate(t: TemplateFormat): Promise<{ buf: ArrayBuffer; sumber: string }> {
   const { data } = await supabase.storage.from("surat").download(templatePath(t));
   if (data) return { buf: await data.arrayBuffer(), sumber: "resmi" };
   const res = await fetch(DEFAULT_TEMPLATE_URL[t]);
-  return { buf: await res.arrayBuffer(), sumber: "contoh" };
+  return { buf: await res.arrayBuffer(), sumber: "resmi" };
 }
 
 export function buildDocx(buf: ArrayBuffer, f: FormData): Blob {
