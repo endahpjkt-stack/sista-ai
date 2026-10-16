@@ -25,7 +25,7 @@ function Letter() {
   const {data}=useSuspenseQuery(letterQuery(id));
   return <Review key={`${id}-${data.extraction?.id ?? 'baru'}`} data={data} />;
 }
-function Review({data}:{data:Awaited<ReturnType<ReturnType<typeof letterQuery>["queryFn"]>>}) {
+function Review({data}:{data:NonNullable<ReturnType<typeof letterQuery>["initialData"]> extends never ? never : { letter: import("@/integrations/supabase/types").Database["public"]["Tables"]["letters"]["Row"]; extraction: import("@/integrations/supabase/types").Database["public"]["Tables"]["extractions"]["Row"] | null; draft: import("@/integrations/supabase/types").Database["public"]["Tables"]["drafts"]["Row"] | null }}) {
   const { letter, extraction, draft }=data;
   const router=useRouter(); const client=useQueryClient(); const process=useServerFn(extractLetter);
   const [form,setForm]=useState<FormData>(()=> draft ? draft.data_disetujui as unknown as FormData : formFromExtraction(extraction?.json_hasil));
