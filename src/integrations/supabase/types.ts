@@ -255,6 +255,106 @@ export type Database = {
         }
         Relationships: []
       }
+      pelatihan: {
+        Row: {
+          dibuat_oleh: string
+          dibuat_pada: string
+          diperbarui_pada: string
+          file_bukti: string
+          id: string
+          judul: string
+          status: string
+        }
+        Insert: {
+          dibuat_oleh: string
+          dibuat_pada?: string
+          diperbarui_pada?: string
+          file_bukti: string
+          id?: string
+          judul: string
+          status?: string
+        }
+        Update: {
+          dibuat_oleh?: string
+          dibuat_pada?: string
+          diperbarui_pada?: string
+          file_bukti?: string
+          id?: string
+          judul?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      pelatihan_drafts: {
+        Row: {
+          data_disetujui: Json
+          disetujui_oleh: string
+          disetujui_pada: string
+          file_draf: string
+          id: string
+          pelatihan_id: string
+        }
+        Insert: {
+          data_disetujui: Json
+          disetujui_oleh: string
+          disetujui_pada?: string
+          file_draf: string
+          id?: string
+          pelatihan_id: string
+        }
+        Update: {
+          data_disetujui?: Json
+          disetujui_oleh?: string
+          disetujui_pada?: string
+          file_draf?: string
+          id?: string
+          pelatihan_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pelatihan_drafts_pelatihan_id_fkey"
+            columns: ["pelatihan_id"]
+            isOneToOne: false
+            referencedRelation: "pelatihan"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pelatihan_extractions: {
+        Row: {
+          dibuat_pada: string
+          id: string
+          json_hasil: Json
+          model: string
+          pelatihan_id: string
+          versi_prompt: string
+        }
+        Insert: {
+          dibuat_pada?: string
+          id?: string
+          json_hasil: Json
+          model: string
+          pelatihan_id: string
+          versi_prompt: string
+        }
+        Update: {
+          dibuat_pada?: string
+          id?: string
+          json_hasil?: Json
+          model?: string
+          pelatihan_id?: string
+          versi_prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pelatihan_extractions_pelatihan_id_fkey"
+            columns: ["pelatihan_id"]
+            isOneToOne: false
+            referencedRelation: "pelatihan"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
