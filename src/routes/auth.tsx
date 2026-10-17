@@ -7,10 +7,13 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { pageHead } from "@/lib/page-head";
 
+// Satu akun bersama untuk seluruh pegawai Sub Bagian Tata Usaha.
+// Pengguna hanya mengetik kata sandi bersama; email akun bersama tetap di sisi aplikasi.
+const SHARED_EMAIL = "endahp.jkt@gmail.com";
+
 export const Route = createFileRoute("/auth")({ head: () => pageHead("Masuk", "Masuk ke aplikasi internal administrasi Surat Tugas SISTA AI."), component: Auth });
 function Auth() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -18,8 +21,8 @@ function Auth() {
   async function login(e: React.FormEvent) {
     e.preventDefault(); setBusy(true); setError("");
     try {
-      const result = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-      if (result.error) { setError("Email atau kata sandi tidak sesuai, atau email belum dikonfirmasi."); return; }
+      const result = await supabase.auth.signInWithPassword({ email: SHARED_EMAIL, password });
+      if (result.error) { setError("Kata sandi tidak sesuai. Silakan coba kembali."); return; }
       const verified = await supabase.auth.getUser();
       if (!verified.data.user) { setError("Sesi belum tersedia. Silakan coba kembali."); return; }
       await navigate({ to: "/surat", replace: true });
@@ -32,12 +35,11 @@ function Auth() {
       <div className="mb-7 flex items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="size-4" />SUB BAGIAN TATA USAHA</div>
       <h1 className="font-display text-4xl">Masuk ke SISTA AI</h1><p className="mt-3 text-sm text-muted-foreground">Sistem Inteligensi Surat Tugas dan Administrasi</p>
       <form onSubmit={login} className="mt-9 space-y-6">
-        <div className="space-y-2"><Label htmlFor="email">Email</Label><Input id="email" type="email" autoComplete="username" required value={email} onChange={e => setEmail(e.target.value)} placeholder="nama@instansi.go.id" className="h-12 bg-card" /></div>
-        <div className="space-y-2"><Label htmlFor="password">Kata sandi</Label><div className="relative"><Input id="password" type={visible ? "text" : "password"} autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} className="h-12 bg-card pr-12" /><Button type="button" size="icon" variant="ghost" className="absolute right-1 top-1.5" aria-label={visible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"} onClick={() => setVisible(!visible)}>{visible ? <EyeOff /> : <Eye />}</Button></div></div>
+        <div className="space-y-2"><Label htmlFor="password">Kata sandi bersama</Label><div className="relative"><Input id="password" type={visible ? "text" : "password"} autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} className="h-12 bg-card pr-12" /><Button type="button" size="icon" variant="ghost" className="absolute right-1 top-1.5" aria-label={visible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"} onClick={() => setVisible(!visible)}>{visible ? <EyeOff /> : <Eye />}</Button></div></div>
         {error && <p role="alert" className="rounded-md bg-danger-soft p-3 text-sm text-destructive">{error}</p>}
         <Button type="submit" variant="seal" className="h-12 w-full" disabled={busy}><LogIn />{busy ? "Memeriksa…" : "Masuk"}</Button>
       </form>
-      <div className="mt-10 border-t border-border pt-5 text-xs text-muted-foreground">Akses untuk pegawai yang memiliki akun SISTA AI.</div>
+      <div className="mt-10 border-t border-border pt-5 text-xs text-muted-foreground">Satu akun bersama untuk pegawai Sub Bagian Tata Usaha. Gunakan kata sandi yang dibagikan oleh admin.</div>
     </main>
   </div>;
 }
