@@ -32,8 +32,10 @@ function PelatihanDetail() {
   const [error, setError] = useState("");
   const [form, setForm] = useState<PelatihanFormData>(() =>
     draft ? (draft.data_disetujui as unknown as PelatihanFormData) : formFromPelatihanExtraction(extraction?.json_hasil));
-  const bermasalah: { field: string; masalah: string; catatan?: string }[] = extraction?.json_hasil?.isian_bermasalah ?? [];
-  const keyakinan: Record<string, number> = extraction?.json_hasil?.tingkat_keyakinan ?? {};
+  // deno-lint-ignore no-explicit-any
+  const hasil = extraction?.json_hasil as any;
+  const bermasalah: { field: string; masalah: string; catatan?: string }[] = hasil?.isian_bermasalah ?? [];
+  const keyakinan: Record<string, number> = hasil?.tingkat_keyakinan ?? {};
   const flag = (path: string) => {
     const b = bermasalah.find(x => x.field === path);
     const k = keyakinan[path];
