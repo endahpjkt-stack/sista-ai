@@ -10,3 +10,4 @@
 - [x] Bangun arsip internal dengan filter dan unduhan Excel/CSV dari surat yang tersedia; surat uji tampil sebagai draf disetujui, kedua unduhan memuat nomor/tanggal yang benar, filter dan tautan draf terverifikasi melalui akun Endah.
 - [x] Sederhanakan akses masuk: satu akun bersama, halaman login hanya meminta kata sandi bersama; beranda langsung menuju daftar surat bila sudah masuk.
 - [x] Menu Bukti Pelatihan dibatalkan atas permintaan pengguna: navigasi, halaman, dan kode fitur dihapus; tabel database ditandai usang (tidak dihapus agar aplikasi tayang tidak terganggu).
+- [ ] Uji ulang surat: masuk dengan kata sandi bersama baru, unggah, proses, tinjau, unduh draf, dan periksa nomor/tanggal pada template resmi.
