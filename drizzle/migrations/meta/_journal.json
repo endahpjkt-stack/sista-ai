@@ -15,6 +15,13 @@
       "when": 1792110214993,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792993444251,
+      "tag": "0002_deprecate_pelatihan_tables",
+      "breakpoints": true
     }
   ]
 }
