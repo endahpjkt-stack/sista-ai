@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Archive, FileText, LogOut, ShieldCheck } from "lucide-react";
+import { Archive, FileText, History, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -26,7 +26,7 @@ export function SistaShell({ children }: { children: ReactNode }) {
         <div className="flex items-center gap-4"><span className="hidden text-xs text-ink-muted sm:block">{auth.user?.email}</span><span className="flex items-center gap-1 text-xs"><ShieldCheck className="size-4" />{auth.isAdmin ? "Admin" : "Pegawai"}</span><Button variant="ghost" size="icon" title="Keluar" aria-label="Keluar" onClick={signOut}><LogOut /></Button></div>
       </div>
     </header>
-    <nav className="border-b border-border"><div className="mx-auto flex max-w-7xl px-5 md:px-8"><Button asChild variant="ghost" className={`h-12 rounded-none border-b-2 ${location.pathname.startsWith("/surat") ? "border-seal" : "border-transparent"}`}><Link to="/surat"><FileText />Daftar surat</Link></Button><Button asChild variant="ghost" className={`h-12 rounded-none border-b-2 ${location.pathname==="/arsip" ? "border-seal" : "border-transparent"}`}><Link to="/arsip"><Archive />Arsip internal</Link></Button></div></nav>
+    <nav className="border-b border-border"><div className="mx-auto flex max-w-7xl flex-wrap px-5 md:px-8"><Button asChild variant="ghost" className={`h-12 rounded-none border-b-2 ${location.pathname.startsWith("/surat") ? "border-seal" : "border-transparent"}`}><Link to="/surat"><FileText />Daftar surat</Link></Button><Button asChild variant="ghost" className={`h-12 rounded-none border-b-2 ${location.pathname==="/riwayat" ? "border-seal" : "border-transparent"}`}><Link to="/riwayat" search={{status:"semua",q:""}}><History />Riwayat surat</Link></Button><Button asChild variant="ghost" className={`h-12 rounded-none border-b-2 ${location.pathname==="/arsip" ? "border-seal" : "border-transparent"}`}><Link to="/arsip"><Archive />Arsip internal</Link></Button></div></nav>
     <main className="mx-auto max-w-7xl px-5 py-8 md:px-8">{children}</main>
     <footer className="mx-auto mt-12 flex max-w-7xl flex-wrap justify-between gap-2 border-t border-border px-5 py-5 text-xs text-muted-foreground md:px-8"><span>SISTA AI · Administrasi Surat Tugas</span><span>Internal · Akses terbatas</span></footer>
   </div>;

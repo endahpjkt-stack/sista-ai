@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedArsipRouteImport } from './routes/_authenticated/arsip'
+import { Route as AuthenticatedRiwayatRouteImport } from './routes/_authenticated/riwayat'
 import { Route as AuthenticatedSuratRouteImport } from './routes/_authenticated/surat'
 import { Route as AuthenticatedSuratIndexRouteImport } from './routes/_authenticated/surat.index'
 import { Route as AuthenticatedSuratIdRouteImport } from './routes/_authenticated/surat.$id'
@@ -35,6 +36,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedArsipRoute = AuthenticatedArsipRouteImport.update({
   id: '/arsip',
   path: '/arsip',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRiwayatRoute = AuthenticatedRiwayatRouteImport.update({
+  id: '/riwayat',
+  path: '/riwayat',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSuratRoute = AuthenticatedSuratRouteImport.update({
@@ -62,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/arsip': typeof AuthenticatedArsipRoute
+  '/riwayat': typeof AuthenticatedRiwayatRoute
   '/surat': typeof AuthenticatedSuratRouteWithChildren
   '/surat/$id': typeof AuthenticatedSuratIdRoute
   '/surat/baru': typeof AuthenticatedSuratBaruRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/arsip': typeof AuthenticatedArsipRoute
+  '/riwayat': typeof AuthenticatedRiwayatRoute
   '/surat/$id': typeof AuthenticatedSuratIdRoute
   '/surat/baru': typeof AuthenticatedSuratBaruRoute
   '/surat': typeof AuthenticatedSuratIndexRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/arsip': typeof AuthenticatedArsipRoute
+  '/_authenticated/riwayat': typeof AuthenticatedRiwayatRoute
   '/_authenticated/surat': typeof AuthenticatedSuratRouteWithChildren
   '/_authenticated/surat/$id': typeof AuthenticatedSuratIdRoute
   '/_authenticated/surat/baru': typeof AuthenticatedSuratBaruRoute
@@ -92,18 +101,27 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/arsip'
+    | '/riwayat'
     | '/surat'
     | '/surat/$id'
     | '/surat/baru'
     | '/surat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/arsip' | '/surat/$id' | '/surat/baru' | '/surat'
+  to:
+    | '/'
+    | '/auth'
+    | '/arsip'
+    | '/riwayat'
+    | '/surat/$id'
+    | '/surat/baru'
+    | '/surat'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/arsip'
+    | '/_authenticated/riwayat'
     | '/_authenticated/surat'
     | '/_authenticated/surat/$id'
     | '/_authenticated/surat/baru'
@@ -144,6 +162,13 @@ declare module '@tanstack/react-router' {
       path: '/arsip'
       fullPath: '/arsip'
       preLoaderRoute: typeof AuthenticatedArsipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/riwayat': {
+      id: '/_authenticated/riwayat'
+      path: '/riwayat'
+      fullPath: '/riwayat'
+      preLoaderRoute: typeof AuthenticatedRiwayatRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/surat': {
@@ -194,11 +219,13 @@ const AuthenticatedSuratRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedArsipRoute: typeof AuthenticatedArsipRoute
+  AuthenticatedRiwayatRoute: typeof AuthenticatedRiwayatRoute
   AuthenticatedSuratRoute: typeof AuthenticatedSuratRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedArsipRoute: AuthenticatedArsipRoute,
+  AuthenticatedRiwayatRoute: AuthenticatedRiwayatRoute,
   AuthenticatedSuratRoute: AuthenticatedSuratRouteWithChildren,
 }
 

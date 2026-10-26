@@ -15,3 +15,4 @@
 - Load letter lists and details through shared TanStack Query options so uploads and draft approvals invalidate the same records.
 - Build archive views from accessible existing letters and related approved drafts/confirmed finals under the letters query-key prefix, avoiding duplicate archive records and preserving shared invalidation.
 - Generate archive exports in the browser; prepare Excel before the download click and encode CSV cells safely to prevent spreadsheet formula injection.
+- Build letter history from the shared archive query, derive its categories without changing stored workflow statuses, and keep filters in URL search parameters so shared invalidation and browser navigation remain consistent.
