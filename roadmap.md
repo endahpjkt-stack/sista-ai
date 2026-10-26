@@ -10,3 +10,5 @@
 - [x] Bangun arsip internal dengan filter dan unduhan Excel/CSV dari surat yang tersedia; surat uji tampil sebagai draf disetujui, kedua unduhan memuat nomor/tanggal yang benar, filter dan tautan draf terverifikasi melalui akun Endah.
 - [x] Sederhanakan akses masuk: satu akun bersama, halaman login hanya meminta kata sandi bersama; beranda langsung menuju daftar surat bila sudah masuk.
 - [x] Menu Bukti Pelatihan dibatalkan atas permintaan pengguna: navigasi, halaman, dan kode fitur dihapus; tabel database ditandai usang (tidak dihapus agar aplikasi tayang tidak terganggu).
+- [x] Uji ulang lewat sesi akun bersama: unggah surat dan disposisi uji, proses AI, tinjau, buat dan unduh DOCX; nomor UJI-ST/002/TU/X/2026 dan Jakarta, 26 Oktober 2026 sesuai template resmi, tetap tersimpan setelah muat ulang.
+- [ ] Verifikasi masuk dengan kata sandi bersama baru — menunggu kata sandi baru yang belum tersedia; sesi akun tidak memverifikasi sandi.
