@@ -13,11 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedArsipRouteImport } from './routes/_authenticated/arsip'
-import { Route as AuthenticatedPelatihanRouteImport } from './routes/_authenticated/pelatihan'
 import { Route as AuthenticatedSuratRouteImport } from './routes/_authenticated/surat'
-import { Route as AuthenticatedPelatihanIndexRouteImport } from './routes/_authenticated/pelatihan.index'
-import { Route as AuthenticatedPelatihanIdRouteImport } from './routes/_authenticated/pelatihan.$id'
-import { Route as AuthenticatedPelatihanBaruRouteImport } from './routes/_authenticated/pelatihan.baru'
 import { Route as AuthenticatedSuratIndexRouteImport } from './routes/_authenticated/surat.index'
 import { Route as AuthenticatedSuratIdRouteImport } from './routes/_authenticated/surat.$id'
 import { Route as AuthenticatedSuratBaruRouteImport } from './routes/_authenticated/surat.baru'
@@ -41,34 +37,11 @@ const AuthenticatedArsipRoute = AuthenticatedArsipRouteImport.update({
   path: '/arsip',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedPelatihanRoute = AuthenticatedPelatihanRouteImport.update({
-  id: '/pelatihan',
-  path: '/pelatihan',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedSuratRoute = AuthenticatedSuratRouteImport.update({
   id: '/surat',
   path: '/surat',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedPelatihanIndexRoute =
-  AuthenticatedPelatihanIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedPelatihanRoute,
-  } as any)
-const AuthenticatedPelatihanIdRoute =
-  AuthenticatedPelatihanIdRouteImport.update({
-    id: '/$id',
-    path: '/$id',
-    getParentRoute: () => AuthenticatedPelatihanRoute,
-  } as any)
-const AuthenticatedPelatihanBaruRoute =
-  AuthenticatedPelatihanBaruRouteImport.update({
-    id: '/baru',
-    path: '/baru',
-    getParentRoute: () => AuthenticatedPelatihanRoute,
-  } as any)
 const AuthenticatedSuratIndexRoute = AuthenticatedSuratIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -89,24 +62,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/arsip': typeof AuthenticatedArsipRoute
-  '/pelatihan': typeof AuthenticatedPelatihanRouteWithChildren
   '/surat': typeof AuthenticatedSuratRouteWithChildren
-  '/pelatihan/$id': typeof AuthenticatedPelatihanIdRoute
-  '/pelatihan/baru': typeof AuthenticatedPelatihanBaruRoute
   '/surat/$id': typeof AuthenticatedSuratIdRoute
   '/surat/baru': typeof AuthenticatedSuratBaruRoute
-  '/pelatihan/': typeof AuthenticatedPelatihanIndexRoute
   '/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/arsip': typeof AuthenticatedArsipRoute
-  '/pelatihan/$id': typeof AuthenticatedPelatihanIdRoute
-  '/pelatihan/baru': typeof AuthenticatedPelatihanBaruRoute
   '/surat/$id': typeof AuthenticatedSuratIdRoute
   '/surat/baru': typeof AuthenticatedSuratBaruRoute
-  '/pelatihan': typeof AuthenticatedPelatihanIndexRoute
   '/surat': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRoutesById {
@@ -115,13 +81,9 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/arsip': typeof AuthenticatedArsipRoute
-  '/_authenticated/pelatihan': typeof AuthenticatedPelatihanRouteWithChildren
   '/_authenticated/surat': typeof AuthenticatedSuratRouteWithChildren
-  '/_authenticated/pelatihan/$id': typeof AuthenticatedPelatihanIdRoute
-  '/_authenticated/pelatihan/baru': typeof AuthenticatedPelatihanBaruRoute
   '/_authenticated/surat/$id': typeof AuthenticatedSuratIdRoute
   '/_authenticated/surat/baru': typeof AuthenticatedSuratBaruRoute
-  '/_authenticated/pelatihan/': typeof AuthenticatedPelatihanIndexRoute
   '/_authenticated/surat/': typeof AuthenticatedSuratIndexRoute
 }
 export interface FileRouteTypes {
@@ -130,38 +92,21 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/arsip'
-    | '/pelatihan'
     | '/surat'
-    | '/pelatihan/$id'
-    | '/pelatihan/baru'
     | '/surat/$id'
     | '/surat/baru'
-    | '/pelatihan/'
     | '/surat/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/auth'
-    | '/arsip'
-    | '/pelatihan/$id'
-    | '/pelatihan/baru'
-    | '/surat/$id'
-    | '/surat/baru'
-    | '/pelatihan'
-    | '/surat'
+  to: '/' | '/auth' | '/arsip' | '/surat/$id' | '/surat/baru' | '/surat'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/arsip'
-    | '/_authenticated/pelatihan'
     | '/_authenticated/surat'
-    | '/_authenticated/pelatihan/$id'
-    | '/_authenticated/pelatihan/baru'
     | '/_authenticated/surat/$id'
     | '/_authenticated/surat/baru'
-    | '/_authenticated/pelatihan/'
     | '/_authenticated/surat/'
   fileRoutesById: FileRoutesById
 }
@@ -201,40 +146,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedArsipRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pelatihan': {
-      id: '/_authenticated/pelatihan'
-      path: '/pelatihan'
-      fullPath: '/pelatihan'
-      preLoaderRoute: typeof AuthenticatedPelatihanRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/surat': {
       id: '/_authenticated/surat'
       path: '/surat'
       fullPath: '/surat'
       preLoaderRoute: typeof AuthenticatedSuratRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pelatihan/': {
-      id: '/_authenticated/pelatihan/'
-      path: '/'
-      fullPath: '/pelatihan/'
-      preLoaderRoute: typeof AuthenticatedPelatihanIndexRouteImport
-      parentRoute: typeof AuthenticatedPelatihanRoute
-    }
-    '/_authenticated/pelatihan/$id': {
-      id: '/_authenticated/pelatihan/$id'
-      path: '/$id'
-      fullPath: '/pelatihan/$id'
-      preLoaderRoute: typeof AuthenticatedPelatihanIdRouteImport
-      parentRoute: typeof AuthenticatedPelatihanRoute
-    }
-    '/_authenticated/pelatihan/baru': {
-      id: '/_authenticated/pelatihan/baru'
-      path: '/baru'
-      fullPath: '/pelatihan/baru'
-      preLoaderRoute: typeof AuthenticatedPelatihanBaruRouteImport
-      parentRoute: typeof AuthenticatedPelatihanRoute
     }
     '/_authenticated/surat/': {
       id: '/_authenticated/surat/'
@@ -260,24 +177,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthenticatedPelatihanRouteChildren {
-  AuthenticatedPelatihanIdRoute: typeof AuthenticatedPelatihanIdRoute
-  AuthenticatedPelatihanBaruRoute: typeof AuthenticatedPelatihanBaruRoute
-  AuthenticatedPelatihanIndexRoute: typeof AuthenticatedPelatihanIndexRoute
-}
-
-const AuthenticatedPelatihanRouteChildren: AuthenticatedPelatihanRouteChildren =
-  {
-    AuthenticatedPelatihanIdRoute: AuthenticatedPelatihanIdRoute,
-    AuthenticatedPelatihanBaruRoute: AuthenticatedPelatihanBaruRoute,
-    AuthenticatedPelatihanIndexRoute: AuthenticatedPelatihanIndexRoute,
-  }
-
-const AuthenticatedPelatihanRouteWithChildren =
-  AuthenticatedPelatihanRoute._addFileChildren(
-    AuthenticatedPelatihanRouteChildren,
-  )
-
 interface AuthenticatedSuratRouteChildren {
   AuthenticatedSuratIdRoute: typeof AuthenticatedSuratIdRoute
   AuthenticatedSuratBaruRoute: typeof AuthenticatedSuratBaruRoute
@@ -295,13 +194,11 @@ const AuthenticatedSuratRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedArsipRoute: typeof AuthenticatedArsipRoute
-  AuthenticatedPelatihanRoute: typeof AuthenticatedPelatihanRouteWithChildren
   AuthenticatedSuratRoute: typeof AuthenticatedSuratRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedArsipRoute: AuthenticatedArsipRoute,
-  AuthenticatedPelatihanRoute: AuthenticatedPelatihanRouteWithChildren,
   AuthenticatedSuratRoute: AuthenticatedSuratRouteWithChildren,
 }
 
