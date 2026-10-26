@@ -10,8 +10,8 @@ import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/_authenticated/riwayat")({
   validateSearch: (search: Record<string, unknown>): { status: "semua" | HistoryStatus; q: string } => ({
-    status: search.status === "draf" || search.status === "proses" || search.status === "resmi" ? search.status : "semua",
-    q: typeof search.q === "string" ? search.q : "",
+    status: search['status'] === "draf" || search['status'] === "proses" || search['status'] === "resmi" ? search['status'] : "semua",
+    q: typeof search['q'] === "string" ? search['q'] : "",
   }),
   head: () => pageHead("Riwayat surat", "Lacak perkembangan surat SISTA AI berdasarkan status Proses, Draf, dan Resmi."),
   loader: ({ context }) => context.queryClient.ensureQueryData(archiveQuery()),
