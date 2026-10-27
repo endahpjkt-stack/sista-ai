@@ -12,5 +12,5 @@
 - [x] Menu Bukti Pelatihan dibatalkan atas permintaan pengguna: navigasi, halaman, dan kode fitur dihapus; tabel database ditandai usang (tidak dihapus agar aplikasi tayang tidak terganggu).
 - [x] Uji ulang lewat sesi akun bersama: unggah surat dan disposisi uji, proses AI, tinjau, buat dan unduh DOCX; nomor UJI-ST/002/TU/X/2026 dan Jakarta, 26 Oktober 2026 sesuai template resmi, tetap tersimpan setelah muat ulang.
 - [ ] Verifikasi masuk dengan kata sandi bersama baru — menunggu kata sandi baru yang belum tersedia; sesi akun tidak memverifikasi sandi.
-- [ ] Tambahkan Riwayat Surat dengan filter Draf, Proses, Resmi dan akses ke setiap surat; uji dengan surat yang tersimpan.
+- [x] Riwayat Surat terverifikasi: 5 surat tersimpan (2 Proses, 3 Draf, 0 Resmi), pencarian nomor dan tanggal, filter bertahan setelah muat ulang, tautan membuka draf, akses terkunci ketika keluar, dan tampilan ponsel tanpa luapan halaman; 10 tes riwayat/arsip lulus.
 - [ ] Tetapkan kata sandi bersama yang dapat dibagikan kepada pegawai, lalu uji login melalui formulir dengan sandi tersebut.
