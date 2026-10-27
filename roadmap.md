@@ -14,3 +14,4 @@
 - [x] Login dengan kata sandi bersama baru terverifikasi melalui formulir dalam browser tanpa sesi sebelumnya; berhasil membuka Daftar surat dan 5 surat di Riwayat Surat.
 - [x] Riwayat Surat terverifikasi: 5 surat tersimpan (2 Proses, 3 Draf, 0 Resmi), pencarian nomor dan tanggal, filter bertahan setelah muat ulang, tautan membuka draf, akses terkunci ketika keluar, dan tampilan ponsel tanpa luapan halaman; 10 tes riwayat/arsip lulus.
 - [x] Sandi bersama dari formulir aman diterapkan ke akun bersama; nilainya tidak ditampilkan di chat atau log, dan fasilitas pengaturan sementara dihapus setelah login berhasil.
+- [ ] Pemulihan akses: uji ulang login berhasil dengan sandi tersimpan; tunggu penggantian sandi melalui formulir aman, terapkan ke akun, dan uji lagi.
